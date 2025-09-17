@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BMB Fancy Text</title>
+</head>
+<body>
+  <h1>BMB Fancy Text API — Preview</h1>
+  <textarea id="text" rows="3" style="width:100%">Hello BMB!</textarea>
+  <button onclick="preview()">Preview</button>
+
+  <div id="result" style="margin-top:20px;border:1px solid #ccc;min-height:120px"></div>
+
+<script>
+async function preview() {
+  const text = document.getElementById('text').value;
+  const url = `/api/bmb-facny-text?text=${encodeURIComponent(text)}&font=Roboto&size=50`;
+  const html = await (await fetch(url)).text();
+  document.getElementById('result').innerHTML = '<iframe style="width:100%;height:150px;border:none" sandbox></iframe>';
+  const iframe = document.querySelector('#result iframe');
+  iframe.srcdoc = html;
+}
+</script>
+</body>
+</html>
