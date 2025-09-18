@@ -1,26 +1,42 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>BMB Fancy Text</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BMB Fancy Text</title>
+<style>
+body{ font-family: system-ui, Arial; padding: 20px; max-width: 800px; margin:auto;}
+textarea{width:100%;}
+.preview{border:1px solid #ddd; min-height:150px; margin-top:15px;}
+</style>
 </head>
 <body>
-  <h1>BMB Fancy Text API — Preview</h1>
-  <textarea id="text" rows="3" style="width:100%">Hello BMB!</textarea>
-  <button onclick="preview()">Preview</button>
-
-  <div id="result" style="margin-top:20px;border:1px solid #ccc;min-height:120px"></div>
-
+<h1>BMB Fancy Text Preview</h1>
+<textarea id="text" rows="3">Hello BMB!</textarea>
+<label>Font:</label>
+<select id="fontSelect"></select>
+<label>Size (px):</label>
+<input id="size" type="number" value="48">
+<label>Weight:</label>
+<select id="weight"><option>300</option><option selected>400</option><option>500</option><option>700</option></select>
+<button id="previewBtn">Preview</button>
+<div class="preview" id="result"></div>
 <script>
-async function preview() {
-  const text = document.getElementById('text').value;
-  const url = `/api/bmb-facny-text?text=${encodeURIComponent(text)}&font=Roboto&size=50`;
-  const html = await (await fetch(url)).text();
-  document.getElementById('result').innerHTML = '<iframe style="width:100%;height:150px;border:none" sandbox></iframe>';
-  const iframe = document.querySelector('#result iframe');
-  iframe.srcdoc = html;
-}
+const fonts=["Roboto","Open+Sans","Lato","Montserrat","Oswald","Raleway","Poppins","Merriweather","Playfair+Display","Noto+Sans","Source+Sans+3","Ubuntu","Inter","Nunito","Mukta","Work+Sans","Inconsolata","Fira+Sans","Bebas+Neue","Dancing+Script","Pacifico","Rubik","Karla","Josefin+Sans","Manrope","Quicksand","Signika","Heebo","Arimo","Cairo","Anton","Bitter","Cabin","Chivo","Concert+One","Crimson+Text","Exo+2","Frank+Ruhl+Libre","Glegoo","Hind","Kanit","League+Spartan","Libre+Baskerville","Manjari","Muli","Old+Standard+TT","Orbitron","Pathway+Gothic+One","Questrial","Righteous","Satisfy","Teko","Varela","Yanone+Kaffeesatz","Zilla+Slab","PT+Sans","PT+Serif","Baloo+2","Oxygen","Chonburi","Amatic+SC"];
+const fontSelect=document.getElementById('fontSelect');
+fonts.forEach(f=>{const o=document.createElement('option');o.value=f;o.textContent=f.replace(/\+/g,' ');fontSelect.appendChild(o);});
+document.getElementById('previewBtn').addEventListener('click',async()=>{
+  const text=document.getElementById('text').value;
+  const font=fontSelect.value;
+  const size=document.getElementById('size').value;
+  const weight=document.getElementById('weight').value;
+  const url=`/api/bmb-facny-text?text=${encodeURIComponent(text)}&font=${encodeURIComponent(font)}&size=${size}&weight=${weight}`;
+  const html=await(await fetch(url)).text();
+  const result=document.getElementById('result');
+  result.innerHTML='<iframe style="width:100%;height:150px;border:none" sandbox></iframe>';
+  const iframe=result.querySelector('iframe');
+  iframe.srcdoc=html;
+});
 </script>
 </body>
 </html>
