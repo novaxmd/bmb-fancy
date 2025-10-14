@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.slick-prev:before,
+.slick-next:before {
+  color: #111111;
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .slick-slider {
+    overflow: hidden;
+  }
+}
