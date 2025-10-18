@@ -61,7 +61,7 @@ const Login = () => {
 
           <div className='self-center'>
             <p>
-              <span className='font-semibold'>Email:</span> stark@gmail.com
+              <span className='font-semibold'>Email:</span> novaxmd1@gmail.com
             </p>
             <p>
               <span className='font-semibold'>Password:</span> tony@stark
